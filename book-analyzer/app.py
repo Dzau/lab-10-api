@@ -54,12 +54,18 @@ def list_books():
         return list(cursor)
     finally:
         client.close()
-        
+
 @app.route("/books/{key}")
 def get_book(key):
     """Return the document of one book, for example /books/pg11.txt; 404 if there is none."""
-    # TODO Step 2.4: replace this line with your code (see the README)
-
+    client = connect()
+    try:
+        book = client[DATABASE][COLLECTION].find_one({"_id": key}, BOOK_FIELDS)
+    finally:
+        client.close()
+    if book is None:
+        raise NotFoundError(f"No book with key {key}")
+    return book
 
 @app.route("/page")
 def page():
