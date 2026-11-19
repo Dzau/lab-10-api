@@ -14,4 +14,4 @@ Name the Lambda function from your screenshot. Why did Chalice create this funct
 
 **Your answer:**
 
-...
+The function is `book-analyzer-dev`. Chalice creates a separate Lambda function for each event-source decorator like `@app.on_s3_event`, and the Lab 07 function's entry point is `analyze_new_book(event)`, which expects an S3 event and can only be invoked by S3. All the `@app.route` handlers share one function, `book-analyzer-dev`, whose handler is the Chalice `app.app` object that routes the HTTP request from API Gateway to `get_book(key)` and returns the HTTP response.
